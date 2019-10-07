@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page import="com.OMO.JavaBeans.*" %>
+    <%@ page import="java.util.List" %>
+    <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -107,6 +110,20 @@ body {
     width: 100%;
   }
 }
+
+.butn {
+   font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  background: #404040;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.butn:hover {
+  background: #dbdbdb;
+  text-decoration: none;
+}
 </style>
 <meta charset="ISO-8859-1">
 <title>OMO-Online Meal Ordering</title>
@@ -125,6 +142,7 @@ String des2 = "Celebrations are incomplete without the family so enjoy with your
 
 String location = (String)session.getAttribute("location");
 
+Meals meal =(Meals)session.getAttribute("Cartinfo");
 %>
 
 <div class="header">
@@ -134,9 +152,10 @@ String location = (String)session.getAttribute("location");
 </div>
 </div>
 
-<%if(session.getAttribute("name").equals("Admin")){ %>
-  <p>Welcome admin <%= session.getAttribute("name") %></p>
-  <%} %>
+<p><% if(!session.isNew() || session.getAttribute("name")!=null){
+	session.getAttribute("name");
+}
+	%></p>
 <div class="topnav">
   <a href="maincourse.jsp">Main Course</a>
   <a href="appetizers.jsp">Appetizers</a>
@@ -154,25 +173,35 @@ String location = (String)session.getAttribute("location");
   <a href="/OMO/UserValidation?action=account">Account</a></div>
   <div style="padding-left: 75%;">
   <a href="/OMO/UserValidation?action=logout">Logout</a></div>
-  <%}%>
+  <%} %>
 </div>
 
 
 <div class="row">
   <div class="leftcolumn">
     <div class="card">
-      <h2><%= Meal1 %></h2>
-      <h5>McDonald's <%= location %> branch</h5>
-      <div class="image"><a href="/OMO/MealsServlet?id=1&action=maincourse"><img alt="" src="Materials/BigMcMeal.png"></a></div>
-      <p><%= price1 %>¥</p>
-      <p><%= des1 %></p>
-    </div>
-       <div class="card">
-      <h2><%= Meal2 %></h2>
-      <h5>Pizza Hut <%= location %> branch</h5>
-      <div class="image"><a href="/OMO/MealsServlet?id=2&action=maincourse"><img alt="" src="Materials/TripleTreatBox.png"></a></div>
-      <p><%= price2 %>¥</p>
-      <p><%=des2 %></p>
+    	<%if(session.getAttribute("Cartinfo")!=null){ %>
+      <h2><%= meal.getName() %></h2>    
+      <div class="image"><img alt="" src="showimg.jsp"></div>
+      <p><%=meal.getPrice() %>¥</p>
+      <p><%=meal.getDescription() %></p>
+      <p>Rating:<%=meal.getRating() %>/5</p>
+      <form action="/OMO/CartServlet?action=remove" method="post" name="remove">
+      	<input type="hidden" name="remove_id" value="<%=meal.getId() %>">
+      	<input type="submit" value="Remove" class="butn">
+      </form>
+      <form action="/OMO/CartServlet?action=checkout" method="post" name="checkout">
+      	<input type="hidden" name="checkout_id" value="<%= meal.getId() %>">
+      	<input  type="hidden" name="checkout_user" value="<%= session.getAttribute("name") %>">
+      	<input type="submit" value="Checkout" class="butn">
+      </form>
+      
+      <%}else{ %>
+      
+      <h2>Cart is empty</h2>
+      
+      <%} %>
+    
     </div>
   </div>
   <div class="rightcolumn">
@@ -183,7 +212,7 @@ String location = (String)session.getAttribute("location");
     </div>
     <div class="card">
       <h3>Popular Meals</h3>
-         <div class="image"><a href="/OMO/MealsServlet?id=1&action=maincourse">BigMac</a></div>
+          <div class="image"><a href="/OMO/MealsServlet?id=1&action=maincourse">BigMac</a></div>
       <div class="image"><a href="/OMO/MealsServlet?id=1&action=appetizers">Nuggets</a></div>
       <div class="image"><a href="/OMO/MealsServlet?id=1&action=sweets">ApplePie</a></div>
     </div>

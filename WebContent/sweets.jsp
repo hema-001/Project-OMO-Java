@@ -114,17 +114,19 @@ body {
 <body>
 
 <%
-String Meal1 = "BigMac";
-String Meal2 = "TripleTreatBox";
+String Meal1 = "ApplePie";
+String Meal2 = "IceCreamCake";
+String Meal3 = "Cheesecake";
 
-double price1 = 50;
-double price2 = 99.9;
+double price1 = 12;
+double price2 = 10;
+double price3 = 15;
 
-String des1 = "double cheese burger with french fries and soda";
-String des2 = "Celebrations are incomplete without the family so enjoy with your loved ones by ordering the delicious pizza hut family meals";
+String des1 = "a slice of sweet and tasty Apple Pie, Freshly baked";
+String des2 = "multiple layers of chocolate cake topped with vanilla ice cream";
+String des3 = "slice of creamy cheesy cheesecake topped with strawberry sauce";
 
 String location = (String)session.getAttribute("location");
-
 %>
 
 <div class="header">
@@ -134,9 +136,10 @@ String location = (String)session.getAttribute("location");
 </div>
 </div>
 
-<%if(session.getAttribute("name").equals("Admin")){ %>
-  <p>Welcome admin <%= session.getAttribute("name") %></p>
-  <%} %>
+<p><% if(!session.isNew() || session.getAttribute("name")!=null){
+	session.getAttribute("name");
+}
+	%></p>
 <div class="topnav">
   <a href="maincourse.jsp">Main Course</a>
   <a href="appetizers.jsp">Appetizers</a>
@@ -144,35 +147,31 @@ String location = (String)session.getAttribute("location");
   <a href="beverages.jsp">Beverages</a>
   <div style="padding-left: 80%;">
   <a href="cart.jsp">Cart</a></div>
-  
-  <%if(session.isNew() || session.getAttribute("name")==null){ %>
-  
-  <a href="login.jsp">Login</a>
-  
-  <%}else if(!session.isNew()||session.getAttribute("name")!=null){ %>
   <div style="padding-left: 10%;">
   <a href="/OMO/UserValidation?action=account">Account</a></div>
   <div style="padding-left: 75%;">
   <a href="/OMO/UserValidation?action=logout">Logout</a></div>
-  <%}%>
 </div>
-
 
 <div class="row">
   <div class="leftcolumn">
     <div class="card">
       <h2><%= Meal1 %></h2>
-      <h5>McDonald's <%= location %> branch</h5>
-      <div class="image"><a href="/OMO/MealsServlet?id=1&action=maincourse"><img alt="" src="Materials/BigMcMeal.png"></a></div>
+      <div class="image" align="center"><a href="/OMO/MealsServlet?id=1&action=sweets"><img alt="" src="Materials/ApplePie2.png" width="50%"></a></div>
       <p><%= price1 %>¥</p>
       <p><%= des1 %></p>
     </div>
        <div class="card">
       <h2><%= Meal2 %></h2>
-      <h5>Pizza Hut <%= location %> branch</h5>
-      <div class="image"><a href="/OMO/MealsServlet?id=2&action=maincourse"><img alt="" src="Materials/TripleTreatBox.png"></a></div>
+      <div class="image" align="center"><a href="/OMO/MealsServlet?id=3&action=sweets"><img alt="" src="Materials/IceCreamCake.png" width="50%"></a></div>
       <p><%= price2 %>¥</p>
       <p><%=des2 %></p>
+    </div>
+    <div class="card">
+      <h2><%= Meal3 %></h2>
+      <div class="image" align="center"><a href="/OMO/MealsServlet?id=2&action=sweets"><img alt="" src="Materials/Cheesecake.png" width="50%"></a></div>
+      <p><%= price3 %>¥</p>
+      <p><%=des3 %></p>
     </div>
   </div>
   <div class="rightcolumn">
@@ -183,7 +182,7 @@ String location = (String)session.getAttribute("location");
     </div>
     <div class="card">
       <h3>Popular Meals</h3>
-         <div class="image"><a href="/OMO/MealsServlet?id=1&action=maincourse">BigMac</a></div>
+          <div class="image"><a href="/OMO/MealsServlet?id=1&action=maincourse">BigMac</a></div>
       <div class="image"><a href="/OMO/MealsServlet?id=1&action=appetizers">Nuggets</a></div>
       <div class="image"><a href="/OMO/MealsServlet?id=1&action=sweets">ApplePie</a></div>
     </div>

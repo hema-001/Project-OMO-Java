@@ -134,9 +134,10 @@ String location = (String)session.getAttribute("location");
 </div>
 </div>
 
-<%if(session.getAttribute("name").equals("Admin")){ %>
-  <p>Welcome admin <%= session.getAttribute("name") %></p>
-  <%} %>
+<p><% if(!session.isNew() || session.getAttribute("name")!=null){
+	session.getAttribute("name");
+}
+	%></p>
 <div class="topnav">
   <a href="maincourse.jsp">Main Course</a>
   <a href="appetizers.jsp">Appetizers</a>
@@ -154,7 +155,7 @@ String location = (String)session.getAttribute("location");
   <a href="/OMO/UserValidation?action=account">Account</a></div>
   <div style="padding-left: 75%;">
   <a href="/OMO/UserValidation?action=logout">Logout</a></div>
-  <%}%>
+  <%} %>
 </div>
 
 
@@ -183,7 +184,7 @@ String location = (String)session.getAttribute("location");
     </div>
     <div class="card">
       <h3>Popular Meals</h3>
-         <div class="image"><a href="/OMO/MealsServlet?id=1&action=maincourse">BigMac</a></div>
+      <div class="image"><a href="/OMO/MealsServlet?id=1&action=maincourse">BigMac</a></div>
       <div class="image"><a href="/OMO/MealsServlet?id=1&action=appetizers">Nuggets</a></div>
       <div class="image"><a href="/OMO/MealsServlet?id=1&action=sweets">ApplePie</a></div>
     </div>
