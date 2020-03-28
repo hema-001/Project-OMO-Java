@@ -1,4 +1,4 @@
-This is a "Project training and Teamwork" course.
+This is a Project training and Teamwork course prject assignment.
 
 Part One Individual Project
 
